@@ -15,7 +15,6 @@
     <script src="app.js"></script>
 </body>
 </html>
-// 示例：随机生成当日运势
 const fortunes = [
     { date: "2023-10-01", luck: "大吉", direction: "北方", tip: "适合摆放绿色植物。" },
     { date: "2023-10-02", luck: "中吉", direction: "东方", tip: "避免金属物品过多。" }
@@ -23,20 +22,23 @@ const fortunes = [
 
 function getDailyFortune() {
     const today = new Date().toISOString().split('T')[0];
-    const fortune = fortunes.find(f => f.date === today) || { 
+    return fortunes.find(f => f.date === today) || { 
         luck: "平", 
         direction: "中央", 
         tip: "保持环境整洁。" 
     };
-    return fortune;
 }
 
-document.getElementById('fortune-content').innerHTML = `
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">运势：${getDailyFortune().luck}</h5>
-            <p>吉利方位：${getDailyFortune().direction}</p>
-            <p>建议：${getDailyFortune().tip}</p>
+// 确保 DOM 加载完成后执行
+document.addEventListener('DOMContentLoaded', () => {
+    const fortune = getDailyFortune(); // 仅调用一次
+    document.getElementById('fortune-content').innerHTML = `
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">运势：${fortune.luck}</h5>
+                <p>吉利方位：${fortune.direction}</p>
+                <p>建议：${fortune.tip}</p>
+            </div>
         </div>
-    </div>
-`;
+    `;
+});
